@@ -21,8 +21,16 @@ public class ErrorController {
     @ResponseBody
     public Map<String, Object> handelr() {
         Map<String, Object> m1 = new HashMap<String, Object>();
-        m1.put("status", "error");
-        m1.put("message", "Unauthorized access.");
+        m1.put("error", "Unauthorized access.");
+        return m1;
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public Map<String, Object> handelr2() {
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        m1.put("error", "Token expired, must generate a new one.");
         return m1;
     }
 }
