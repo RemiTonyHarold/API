@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,6 +29,15 @@ public class RequestHandlerInterceptor implements HandlerInterceptor {
         logger.info("Request URL::" + request.getRequestURL().toString()
                 + ":: Start Time=" + System.currentTimeMillis());
         request.setAttribute("startTime", startTime);
+
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            AuthorizationRequired filter = handlerMethod.getMethod().getAnnotation(AuthorizationRequired.class);
+            if (filter == null) {
+                return true;
+            }
+        }
+
         String token = request.getHeader("X-RSS-TOKEN");
         if (token == null) {
             throw new AuthorizationException();
