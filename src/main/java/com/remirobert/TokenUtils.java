@@ -38,10 +38,18 @@ public class TokenUtils {
         return calendar.getTime();
     }
 
+    public Boolean checkExpirationToken(Token token) {
+        return (new Date().before(token.expireDate));
+    }
+
     public Boolean isTokenValid(String token) {
         Token tokenFound = repository.findByToken(token);
         if (tokenFound == null) {
             throw new AuthorizationException();
+        }
+        System.out.println(tokenFound.expireDate);
+        if (!checkExpirationToken(tokenFound)) {
+            throw new TokenExpiredException();
         }
         return true;
     }

@@ -30,7 +30,7 @@ public class ErrorController {
     @ResponseBody
     public Map<String, Object> handelr2() {
         Map<String, Object> m1 = new HashMap<String, Object>();
-        m1.put("error", "Token expired, must generate a new one.");
+        m1.put("error", "Token expired.");
         return m1;
     }
 }
