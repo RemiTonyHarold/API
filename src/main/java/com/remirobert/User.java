@@ -2,6 +2,7 @@ package com.remirobert;
 
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.UUID;
 
@@ -15,16 +16,12 @@ public class User {
     public String mail;
     public String password;
 
+    @DBRef
+    public Token token;
+
     public User(String mail, String password) {
         id = UUID.randomUUID().toString();
         this.mail = mail;
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "User[id=%s, mail='%s', password='%s']",
-                id, mail, password);
     }
 }

@@ -42,6 +42,7 @@ public class RequestHandlerInterceptor implements HandlerInterceptor {
         if (token == null) {
             throw new AuthorizationException();
         }
+
         return tokenUtils.isTokenValid(token);
     }
 
