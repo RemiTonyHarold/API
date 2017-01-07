@@ -14,21 +14,21 @@
 	"requests": [
 		{
 			"id": "4d385e02-dd21-7445-6a9e-70e5bbe4cc44",
-			"headers": "",
-			"url": "http://127.0.0.1:4242/signup",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/signup",
 			"preRequestScript": null,
 			"pathVariables": {},
 			"method": "POST",
 			"data": [
 				{
 					"key": "email",
-					"value": "toto",
+					"value": "{{email}}",
 					"type": "text",
 					"enabled": true
 				},
 				{
 					"key": "password",
-					"value": "ok",
+					"value": "{{password}}",
 					"type": "text",
 					"enabled": true
 				}
@@ -38,7 +38,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1483781567867,
+			"time": 1483783526721,
 			"name": "http://127.0.0.1:4242/signup",
 			"description": "",
 			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
@@ -46,56 +46,52 @@
 		},
 		{
 			"id": "6dea3e16-143a-4b7e-1f46-fb0ba9c7dc88",
-			"headers": "RSS-TOKEN: 8PQ0J58S7APKU6Y6PDGNHE4AI26QCVIT079ZG7DF5JG0KC6ZWGLJUOPI6YA4VZRX8PRR8G3EWX7ORK2SQWCMFUMR2PD75NOU96F1NUNKUU4BGQ74XHM4960FI6WZON9AH2Y5CMODADD243RPA6ZGW7CHZ66XIM8CTX33VMCYHZKP7SKNRGZBBU0BTNUSIQL1LP07I2OE1164M06GII5RG0E72EFUE29WQF1PS2UVGAESNB1QISA4J0T01A6SDRB7\n",
-			"url": "http://127.0.0.1:4242/hello",
-			"pathVariables": {},
+			"headers": "RSS-TOKEN: {{accessToken}}\n",
+			"url": "{{url}}/hello",
 			"preRequestScript": null,
+			"pathVariables": {},
 			"method": "GET",
-			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
 			"data": null,
 			"dataMode": "params",
-			"name": "http://127.0.0.1:4242/hello",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1483782410910,
-			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
-			"helperAttributes": {}
+			"helperAttributes": {},
+			"time": 1483783528663,
+			"name": "http://127.0.0.1:4242/hello",
+			"description": "",
+			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
+			"responses": []
 		},
 		{
 			"id": "8a9acebe-e9df-2fad-9b31-b923673e6d2d",
 			"headers": "",
-			"url": "http://127.0.0.1:4242/auth",
-			"pathVariables": {},
+			"url": "{{url}}/auth",
 			"preRequestScript": null,
+			"pathVariables": {},
 			"method": "POST",
-			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
 			"data": [
 				{
 					"key": "email",
-					"value": "toto",
+					"value": "{{email}}",
 					"type": "text",
 					"enabled": true
 				},
 				{
 					"key": "password",
-					"value": "ok",
+					"value": "{{password}}",
 					"type": "text",
 					"enabled": true
 				}
 			],
 			"dataMode": "params",
-			"name": "http://127.0.0.1:4242/auth",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1483782103353,
-			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
-			"helperAttributes": {}
+			"helperAttributes": {},
+			"time": 1483783527847,
+			"name": "http://127.0.0.1:4242/auth",
+			"description": "",
+			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
+			"responses": []
 		}
 	]
 }
