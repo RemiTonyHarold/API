@@ -7,11 +7,11 @@ import java.util.Date;
  */
 public class TokenResponse {
 
-    public String token;
+    public String accessToken;
     public String expireDate;
 
     public TokenResponse(Token token) {
-        this.token = token.token;
+        this.accessToken = token.accessToken;
         this.expireDate = token.expireDate.toString();
     }
 }

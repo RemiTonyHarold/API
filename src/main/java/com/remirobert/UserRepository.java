@@ -1,6 +1,8 @@
 package com.remirobert;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
-    public User findByTokenId(String id);
+    User findById(String id);
+    User findByEmailAndPassword(String email, String password);
 }

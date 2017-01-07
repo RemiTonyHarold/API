@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 /**
@@ -14,8 +15,9 @@ import java.util.UUID;
 public class HelloController {
 
     @AuthorizationRequired
-    @RequestMapping(value = "/home", method = RequestMethod.GET, produces = "application/json")
-    public String hello() {
-        return "hello world : " + UUID.randomUUID().toString();
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String hello(HttpServletRequest request) {
+        User user = (User)request.getAttribute("user");
+        return "hello : " + user.email;
     }
 }

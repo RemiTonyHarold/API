@@ -1,6 +1,11 @@
 package com.remirobert;
 
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -19,7 +24,10 @@ import static javax.accessibility.AccessibleRole.SEPARATOR;
 public class TokenUtils {
 
     @Autowired
-    private TokenRepository repository;
+    private TokenRepository tokenRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public static String generateNewToken() {
         Random random = new SecureRandom();
@@ -34,7 +42,7 @@ public class TokenUtils {
 
     public static Date dateExpiration() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 5);
+        calendar.add(Calendar.HOUR, 1);
         return calendar.getTime();
     }
 
@@ -42,15 +50,18 @@ public class TokenUtils {
         return (new Date().before(token.expireDate));
     }
 
-    public Boolean isTokenValid(String token) {
-        Token tokenFound = repository.findByToken(token);
+    public User isTokenValid(String token) {
+        Token tokenFound = tokenRepository.findByAccessToken(token);
         if (tokenFound == null) {
             throw new AuthorizationException();
         }
-        System.out.println(tokenFound.expireDate);
+        User user = userRepository.findById(tokenFound.userId);
+        if (user == null) {
+            throw new AuthorizationException();
+        }
         if (!checkExpirationToken(tokenFound)) {
             throw new TokenExpiredException();
         }
-        return true;
+        return user;
     }
 }

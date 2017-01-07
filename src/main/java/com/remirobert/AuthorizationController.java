@@ -19,23 +19,27 @@ public class AuthorizationController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
-    public User hello(HttpServletRequest request,
-                      @RequestParam(value="email", required=true) String email,
-                      @RequestParam(value="password", required=false) String password) {
+    public UserConnectReponse hello(HttpServletRequest request,
+                                    @RequestParam(value = "email") String email,
+                                    @RequestParam(value = "password") String password) {
         User user = new User(email, password);
-        Token token = new Token(TokenUtils.generateNewToken());
+        Token token = new Token();
+        token.userId = user.id;
         tokenRepository.insert(token);
-        user.token = token;
         userRepository.insert(user);
-        return user;
+        return new UserConnectReponse(user, new TokenResponse(token));
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
     @ResponseBody
-    public TokenResponse login() {
-        Token token = new Token(TokenUtils.generateNewToken());
+    public TokenResponse login(HttpServletRequest request,
+                               @RequestParam(value = "email") String email,
+                               @RequestParam(value = "password") String password) {
+        User user = userRepository.findByEmailAndPassword(email, password);
+        Token token = tokenRepository.findByUserId(user.id);
+        token.generateNewToken();
         tokenRepository.save(token);
         return new TokenResponse(token);
     }

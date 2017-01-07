@@ -21,6 +21,9 @@ public class RequestHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     private TokenUtils tokenUtils;
     private static final Logger logger = LoggerFactory.getLogger(RequestHandlerInterceptor.class);
+    private static final String HEADER_TOKEN = "RSS-TOKEN";
+    private static final String USER_ATTRIBUTE_REQUEST = "user";
+    private static final String TIME_ATTRIBUTE_REQUEST = "startTime";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -28,7 +31,7 @@ public class RequestHandlerInterceptor implements HandlerInterceptor {
         long startTime = System.currentTimeMillis();
         logger.info("Request URL::" + request.getRequestURL().toString()
                 + ":: Start Time=" + System.currentTimeMillis());
-        request.setAttribute("startTime", startTime);
+        request.setAttribute(TIME_ATTRIBUTE_REQUEST, startTime);
 
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -37,13 +40,16 @@ public class RequestHandlerInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
-
-        String token = request.getHeader("X-RSS-TOKEN");
+        String token = request.getHeader(HEADER_TOKEN);
         if (token == null) {
             throw new AuthorizationException();
         }
-
-        return tokenUtils.isTokenValid(token);
+        User user = tokenUtils.isTokenValid(token);
+        if (user == null) {
+            return false;
+        }
+        request.setAttribute(USER_ATTRIBUTE_REQUEST, user);
+        return true;
     }
 
     @Override
@@ -54,7 +60,7 @@ public class RequestHandlerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
                                 Exception ex) throws Exception {
-        long startTime = (Long) request.getAttribute("startTime");
+        long startTime = (Long) request.getAttribute(TIME_ATTRIBUTE_REQUEST);
         logger.info("Request URL::" + request.getRequestURL().toString()
                 + ":: End Time=" + System.currentTimeMillis());
         logger.info("Request URL::" + request.getRequestURL().toString()

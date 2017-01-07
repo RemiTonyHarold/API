@@ -3,25 +3,26 @@ package com.remirobert;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
 /**
  * Created by remirobert on 02/01/2017.
  */
+
+@Document(collection = "user")
 public class User {
 
     @Id
     public String id;
-    public String mail;
+    public String email;
     public String password;
 
-    @DBRef
-    public Token token;
 
-    public User(String mail, String password) {
+    public User(String email, String password) {
         id = UUID.randomUUID().toString();
-        this.mail = mail;
+        this.email = email;
         this.password = password;
     }
 }
