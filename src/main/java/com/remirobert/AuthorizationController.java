@@ -26,21 +26,21 @@ public class AuthorizationController {
                                     @RequestParam(value = "password") String password) {
         User user = new User(email, password);
         Token token = new Token();
-        token.userId = user.id;
+        token.setUserId(user.getId());
         tokenRepository.insert(token);
         userRepository.insert(user);
-        return new UserConnectReponse(user, new TokenResponse(token));
+        return new UserConnectReponse(user, new TokenResponseAuthorization(token));
     }
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     @ResponseBody
-    public TokenResponse login(HttpServletRequest request,
-                               @RequestParam(value = "email") String email,
-                               @RequestParam(value = "password") String password) {
+    public TokenResponseAuthorization login(HttpServletRequest request,
+                                            @RequestParam(value = "email") String email,
+                                            @RequestParam(value = "password") String password) {
         User user = userRepository.findByEmailAndPassword(email, password);
-        Token token = tokenRepository.findByUserId(user.id);
+        Token token = tokenRepository.findByUserId(user.getId());
         token.generateNewToken();
         tokenRepository.save(token);
-        return new TokenResponse(token);
+        return new TokenResponseAuthorization(token);
     }
 }

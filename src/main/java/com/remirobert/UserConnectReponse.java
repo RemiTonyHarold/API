@@ -5,11 +5,19 @@ package com.remirobert;
  */
 public class UserConnectReponse {
 
-    public User user;
-    public TokenResponse token;
+    private User user;
+    private TokenResponseAuthorization token;
 
-    public UserConnectReponse(User user, TokenResponse tokenResponse) {
+    public UserConnectReponse(User user, TokenResponseAuthorization tokenResponse) {
         this.user = user;
         this.token = tokenResponse;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public TokenResponseAuthorization getToken() {
+        return token;
     }
 }

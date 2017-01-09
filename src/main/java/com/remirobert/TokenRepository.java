@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TokenRepository extends MongoRepository<Token, String> {
     Token findByAccessToken(String token);
+    Token findByRefreshToken(String refreshToken);
     Token findByUserId(String id);
 }

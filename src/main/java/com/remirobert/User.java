@@ -15,14 +15,26 @@ import java.util.UUID;
 public class User {
 
     @Id
-    public String id;
-    public String email;
-    public String password;
+    private String id;
+    private String email;
+    private String password;
 
 
     public User(String email, String password) {
         id = UUID.randomUUID().toString();
         this.email = email;
         this.password = password;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

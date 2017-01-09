@@ -18,6 +18,6 @@ public class HelloController {
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello(HttpServletRequest request) {
         User user = (User)request.getAttribute("user");
-        return "hello : " + user.email;
+        return "hello : " + user.getEmail();
     }
 }

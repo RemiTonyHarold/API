@@ -33,4 +33,14 @@ public class ErrorController {
         m1.put("error", "Token expired.");
         return m1;
     }
+
+    @ExceptionHandler(TokenNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public Map<String, Object> tokenNotFound() {
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        m1.put("error", "Token not found or expired.");
+        return m1;
+    }
+
 }

@@ -47,7 +47,7 @@ public class TokenUtils {
     }
 
     public Boolean checkExpirationToken(Token token) {
-        return (new Date().before(token.expireDate));
+        return (new Date().before(token.getExpireDate()));
     }
 
     public User isTokenValid(String token) {
@@ -55,7 +55,7 @@ public class TokenUtils {
         if (tokenFound == null) {
             throw new AuthorizationException();
         }
-        User user = userRepository.findById(tokenFound.userId);
+        User user = userRepository.findById(tokenFound.getUserId());
         if (user == null) {
             throw new AuthorizationException();
         }
