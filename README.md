@@ -67,3 +67,23 @@ call this route to refresh the code
 }
 ```
 
+#Categories
+get avalaible categories, doesn't need to be logged
+
+  - **Method**    : GET
+  - **route**     : {{base_url}}/categories
+  - **response**  :
+```json
+[
+  {
+    "id": "5876b07d90561225dd044cb2",
+    "name": "World / U.S. News"
+  },
+  {
+    "id": "5876b07d90561225dd044cb3",
+    "name": "Local News"
+  }
+]
+```
+
+
