@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "feedSource")
 public class FeedSource {
 
+    private String id;
     private String categoryId;
     private String name;
     private String url;
@@ -22,5 +23,9 @@ public class FeedSource {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getId() {
+        return id;
     }
 }

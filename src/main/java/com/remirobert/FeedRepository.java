@@ -1,6 +1,7 @@
 package com.remirobert;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,4 +13,5 @@ import java.util.List;
 @Repository
 public interface FeedRepository extends MongoRepository<FeedSource, String> {
     List<FeedSource> findByCategoryId(String categoryId);
+    FeedSource findById(String id);
 }
