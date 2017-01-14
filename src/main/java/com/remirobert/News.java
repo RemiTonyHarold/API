@@ -15,7 +15,7 @@ import java.util.jar.Attributes;
 @Document(collection = "news")
 public class News {
 
-    private static final String TITLE_ELEMENT = "title";
+    public static final String TITLE_ELEMENT = "title";
     private static final String DESCRIPTION_ELEMENT = "description";
     private static final String LINK_ELEMENT = "link";
     private static final String PUB_DATE_ELEMENT = "pubDate";
@@ -49,6 +49,8 @@ public class News {
             }
         }
     }
+
+    public News() {}
 
     public News(Element eElement, String sourceId) {
         id = UUID.randomUUID().toString();

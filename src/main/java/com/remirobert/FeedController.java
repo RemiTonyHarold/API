@@ -27,8 +27,22 @@ public class FeedController {
     @Autowired
     private FeedRepository feedRepository;
 
+    @Autowired
+    private NewsRepository newsRepository;
+
+    private News getOrCreateNews(Element element, String sourceId) {
+        if (element.getElementsByTagName(News.TITLE_ELEMENT).getLength() > 0) {
+            String title = element.getElementsByTagName(News.TITLE_ELEMENT).item(0).getTextContent();
+            News news = newsRepository.findBySourceIdAndTitle(sourceId, title);
+            if (news != null) {
+                return news;
+            }
+        }
+        return new News(element, sourceId);
+    }
+
     @RequestMapping(value = "/news/{source}", method = RequestMethod.GET)
-    public List<News>getNews(@PathVariable("source") String sourceId) {
+    public List<News> getNews(@PathVariable("source") String sourceId) {
         List<News> newsList = new ArrayList();
         FeedSource source = feedRepository.findById(sourceId);
         if (source == null) {
@@ -40,8 +54,7 @@ public class FeedController {
         try {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(uriSource);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("error parsing uri");
         }
 
@@ -51,17 +64,16 @@ public class FeedController {
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    News news = new News(eElement, sourceId);
-                    newsList.add(news);
+                    newsList.add(getOrCreateNews((Element)nNode, sourceId));
                 }
             }
         }
+        newsRepository.save(newsList);
         return newsList;
     }
 
     @RequestMapping(value = "/feedSource/{category}", method = RequestMethod.GET)
-    public List<FeedSource>getFeedSource(@PathVariable("category") String category) {
+    public List<FeedSource> getFeedSource(@PathVariable("category") String category) {
         return feedRepository.findByCategoryId(category);
     }
 }
