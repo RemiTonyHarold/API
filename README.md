@@ -54,7 +54,7 @@ authentificate user to get access, and refresh token
 }
 ```
 
-#Token
+#Token 🔒
 call this route to refresh the code
 
   - **Method**    : GET
@@ -68,7 +68,7 @@ call this route to refresh the code
 ```
 
 #Categories
-get avalaible categories, doesn't need to be logged
+get avalaible categories
 
   - **Method**    : GET
   - **route**     : {{base_url}}/categories
