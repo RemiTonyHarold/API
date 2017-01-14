@@ -109,4 +109,37 @@ get the feed sources for a given categorie
 ]
 ```
 
+#News
+get the news for a given source
 
+  - **Method**    : GET
+  - **route**     : {{base_url}}/news/{source_id}
+  - **response**  :
+```json
+[
+    {
+        "creator": "By MARCIA DUNN",
+        "dateCreation": 1484385773127,
+        "description": "CAPE CANAVERAL, Fla.        (AP) -- The International Space Station&amp;apos;s solar power grid got three more top-of-the-line batteries Friday during the second spacewalk in a week....",
+        "guid": "http://hosted.ap.org/dynamic/stories/U/US_SCI_SPACE_STATION?SITE=OHLIM&SECTION=HOME&TEMPLATE=DEFAULT",
+        "id": "5ee96fb5-e857-4245-b5f3-4b73d7a6d30f",
+        "link": "http://hosted.ap.org/dynamic/stories/U/US_SCI_SPACE_STATION?SITE=OHLIM&SECTION=HOME&TEMPLATE=DEFAULT",
+        "pubDate": "Fri, 13 Jan 2017 22:49:04 GMT",
+        "sourceId": "5878030ab23d51a4a9fb3f3d",
+        "thumbnail": null,
+        "title": "Spacewalking astronauts upgrade orbiting lab's power grid"
+    },
+    {
+        "creator": "By DAVE COLLINS",
+        "dateCreation": 1484385773129,
+        "description": "HARTFORD, Conn.        (AP) -- Keep an eye on the picnic basket. Bear sightings are surging across Connecticut....",
+        "guid": "http://hosted.ap.org/dynamic/stories/U/US_BEAR_SIGHTINGS?SITE=OHLIM&SECTION=HOME&TEMPLATE=DEFAULT",
+        "id": "722ece3d-eb58-493e-9847-b99c90d79788",
+        "link": "http://hosted.ap.org/dynamic/stories/U/US_BEAR_SIGHTINGS?SITE=OHLIM&SECTION=HOME&TEMPLATE=DEFAULT",
+        "pubDate": "Fri, 13 Jan 2017 19:04:33 GMT",
+        "sourceId": "5878030ab23d51a4a9fb3f3d",
+        "thumbnail": null,
+        "title": "Watch the picnic basket: Bear sightings surge in Connecticut"
+    }
+]
+```
