@@ -86,4 +86,27 @@ get avalaible categories, doesn't need to be logged
 ]
 ```
 
+#Feed Source
+get the feed sources for a given categorie
+
+  - **Method**    : GET
+  - **route**     : {{base_url}}/feedSource/{category_id}
+  - **response**  :
+```json
+[
+    {
+        "categoryId": "5878030ab23d51a4a9fb3f38",
+        "id": "5878030ab23d51a4a9fb3f3d",
+        "name": "AP Top Science News",
+        "url": "http://hosted.ap.org/lineups/SCIENCEHEADS-rss_2.0.xml?SITE=OHLIM&SECTION=HOME"
+    },
+    {
+        "categoryId": "5878030ab23d51a4a9fb3f38",
+        "id": "5878030ab23d51a4a9fb3f3e",
+        "name": "ScienceDaily Headlines",
+        "url": "http://feeds.sciencedaily.com/sciencedaily"
+    }
+]
+```
+
 
