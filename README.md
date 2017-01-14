@@ -57,8 +57,14 @@ authentificate user to get access, and refresh token
 #Token 🔒
 call this route to refresh the code
 
-  - **Method**    : GET
-  - **route**     : {{base_url}}/token/:token_refresh
+  - **Method**    : POST
+  - **route**     : {{base_url}}/accessToken
+  - **parameters**:
+  ```json
+{
+  refreshToken: "Y5YGIB25WEVQ9EIZ84AECVC532AF9PI55LXRN0Q69OPDOV0A7S8DPOKPKRJZI3RUYO7K3AYDG4UMIM447BYN1BCNR09F295O1INFDNM43EI6T9LTBSW25XGJBVRVJV8VP6KO0497MCRX666R6DG46N9KDFOUAP7B4FTYADSK3ARCFTTG1QSYZ3TJJ7SCJQ3GJD37J2824YN10EF9KNVURHEU5BE4AI4UF59J0M84SS42GJ511IYRQRMUE7PM2ZNE"
+}
+```
   - **response**  :
 ```json
 {
