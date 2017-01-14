@@ -1,10 +1,7 @@
 package com.remirobert;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by remirobert on 09/01/2017.
@@ -16,8 +13,8 @@ public class TokenController {
     @Autowired
     private TokenRepository tokenRepository;
 
-    @RequestMapping(value = "/token/{token}", method = RequestMethod.GET)
-    public TokenResponse refreshToken(@PathVariable("token") String token) {
+    @RequestMapping(value = "/accessToken", method = RequestMethod.POST)
+    public TokenResponse refreshToken(@RequestParam(value = "refreshToken") String token) {
         Token tokenUser = tokenRepository.findByRefreshToken(token);
         if (tokenUser == null) {
             throw new TokenNotFoundException();
