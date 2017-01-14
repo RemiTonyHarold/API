@@ -25,46 +25,13 @@ public class FeedController {
     @Autowired
     private NewsRepository newsRepository;
 
-    private News getOrCreateNews(Element element, String sourceId) {
-        if (element.getElementsByTagName(News.TITLE_ELEMENT).getLength() > 0) {
-            String title = element.getElementsByTagName(News.TITLE_ELEMENT).item(0).getTextContent();
-            News news = newsRepository.findBySourceIdAndTitle(sourceId, title);
-            if (news != null) {
-                return news;
-            }
-        }
-        return new News(element, sourceId);
-    }
-
     @RequestMapping(value = "/news/{source}", method = RequestMethod.GET)
     public List<News> getNews(@PathVariable("source") String sourceId) {
-        List<News> newsList = new ArrayList();
         FeedSource source = feedRepository.findById(sourceId);
         if (source == null) {
-            return newsList;
+            throw new SourceIdNotFoundException();
         }
-        String uriSource = source.getUrl();
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        Document doc = null;
-        try {
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            doc = dBuilder.parse(uriSource);
-        } catch (Exception e) {
-            System.out.println("error parsing uri");
-        }
-
-        if (doc != null) {
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("item");
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-                Node nNode = nList.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    newsList.add(getOrCreateNews((Element)nNode, sourceId));
-                }
-            }
-        }
-        newsRepository.save(newsList);
-        return newsList;
+        return newsRepository.findBySourceId(sourceId);
     }
 
     @RequestMapping(value = "/feedSource/{category}", method = RequestMethod.GET)

@@ -43,4 +43,12 @@ public class ErrorController {
         return m1;
     }
 
+    @ExceptionHandler(SourceIdNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public Map<String, Object> sourceIdNotFound() {
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        m1.put("error", "Source feed not found.");
+        return m1;
+    }
 }
