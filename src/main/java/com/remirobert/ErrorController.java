@@ -51,4 +51,13 @@ public class ErrorController {
         m1.put("error", "Source feed not found.");
         return m1;
     }
+
+    @ExceptionHandler(UserCreationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public Map<String, Object> userAlreadyExist() {
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        m1.put("error", "Email already exist.");
+        return m1;
+    }
 }
