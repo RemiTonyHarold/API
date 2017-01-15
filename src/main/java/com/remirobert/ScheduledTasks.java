@@ -48,7 +48,7 @@ public class ScheduledTasks {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(uriSource);
         } catch (Exception e) {
-            System.out.println("error parsing uri");
+            System.out.println("error parsing uri : " + uriSource);
         }
 
         if (doc != null) {

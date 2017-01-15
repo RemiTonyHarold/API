@@ -1,10 +1,7 @@
 package com.remirobert;
 
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
+import org.w3c.dom.*;
 
 /**
  * Created by remirobert on 12/01/2017.
@@ -76,7 +73,10 @@ public class FeedSource {
         if (element.getElementsByTagName("image").getLength() > 0) {
             Node nodeImage = element.getElementsByTagName("image").item(0);
             if (nodeImage.getNodeType() == Node.ELEMENT_NODE) {
-                imageUrl = ((Element)nodeImage).getElementsByTagName("url").item(0).getTextContent();
+                NodeList nodeListImage = ((Element)nodeImage).getElementsByTagName("url");
+                if (nodeListImage != null && nodeListImage.getLength() > 0) {
+                    imageUrl = nodeListImage.item(0).getTextContent();
+                }
             }
         }
     }
