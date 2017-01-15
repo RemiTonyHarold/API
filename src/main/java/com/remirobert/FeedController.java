@@ -31,12 +31,13 @@ public class FeedController {
     private List<NewsCategoryResponse> getNewsForCategories(List<Category> categoryList) {
         List<NewsCategoryResponse> responseList = new ArrayList<>();
         for (Category category : categoryList) {
-            List<News> newsList = new ArrayList<>();
             List<FeedSource> feedSourceList = feedRepository.findByCategoryId(category.getId());
             for (FeedSource source : feedSourceList) {
-                newsList.addAll(newsRepository.findBySourceId(source.getId()));
+                List<News> newsList = newsRepository.findBySourceId(source.getId());
+                for (News news : newsList) {
+                    responseList.add(new NewsCategoryResponse(category, news));
+                }
             }
-            responseList.add(new NewsCategoryResponse(category, newsList));
         }
         return responseList;
     }
@@ -66,8 +67,10 @@ public class FeedController {
                 throw new SourceIdNotFoundException();
             }
             List<NewsCategoryResponse> responseList = new ArrayList<>();
-            NewsCategoryResponse response = new NewsCategoryResponse(category, newsRepository.findBySourceId(sourceId));
-            responseList.add(response);
+            List<News> newsList = newsRepository.findBySourceId(sourceId);
+            for (News news : newsList) {
+                responseList.add(new NewsCategoryResponse(category, news));
+            }
             return responseList;
         }
         return getNewsForCategories(getListCategories(categoryId));

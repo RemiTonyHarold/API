@@ -13,5 +13,4 @@ import java.util.List;
 public interface NewsRepository extends MongoRepository<News, String> {
     News findBySourceIdAndTitle(String sourceId, String title);
     List<News> findBySourceId(String sourceId);
-
 }
