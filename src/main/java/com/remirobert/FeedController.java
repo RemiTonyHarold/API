@@ -25,13 +25,52 @@ public class FeedController {
     @Autowired
     private NewsRepository newsRepository;
 
-    @RequestMapping(value = "/news/{source}", method = RequestMethod.GET)
-    public List<News> getNews(@PathVariable("source") String sourceId) {
-        FeedSource source = feedRepository.findById(sourceId);
-        if (source == null) {
-            throw new SourceIdNotFoundException();
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    private List<NewsCategoryResponse> getNewsForCategories(List<Category> categoryList) {
+        List<NewsCategoryResponse> responseList = new ArrayList<>();
+        for (Category category : categoryList) {
+            List<News> newsList = new ArrayList<>();
+            List<FeedSource> feedSourceList = feedRepository.findByCategoryId(category.getId());
+            for (FeedSource source : feedSourceList) {
+                newsList.addAll(newsRepository.findBySourceId(source.getId()));
+            }
+            responseList.add(new NewsCategoryResponse(category, newsList));
         }
-        return newsRepository.findBySourceId(sourceId);
+        return responseList;
+    }
+
+    private List<Category> getListCategories(String categoryId) {
+        List<Category> categoryList = new ArrayList<>();
+        if (categoryId != null) {
+            Category category = categoryRepository.findById(categoryId);
+            categoryList.add(category);
+        }
+        else {
+            categoryList.addAll(categoryRepository.findAll());
+        }
+        return categoryList;
+    }
+
+    @RequestMapping(value = "/news", method = RequestMethod.GET)
+    public List<NewsCategoryResponse> getNews(@RequestParam(value = "source", required = false) String sourceId,
+                              @RequestParam(value = "category", required = false) String categoryId) {
+        if (sourceId != null) {
+            FeedSource source = feedRepository.findById(sourceId);
+            if (source == null) {
+                throw new SourceIdNotFoundException();
+            }
+            Category category = categoryRepository.findById(source.getCategoryId());
+            if (category == null) {
+                throw new SourceIdNotFoundException();
+            }
+            List<NewsCategoryResponse> responseList = new ArrayList<>();
+            NewsCategoryResponse response = new NewsCategoryResponse(category, newsRepository.findBySourceId(sourceId));
+            responseList.add(response);
+            return responseList;
+        }
+        return getNewsForCategories(getListCategories(categoryId));
     }
 
     @RequestMapping(value = "/feedSource/{category}", method = RequestMethod.GET)
