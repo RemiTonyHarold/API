@@ -53,6 +53,7 @@ public class ScheduledTasks {
 
         if (doc != null) {
             doc.getDocumentElement().normalize();
+            updateSourceInformations(source, doc);
             NodeList nList = doc.getElementsByTagName("item");
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
@@ -62,6 +63,15 @@ public class ScheduledTasks {
             }
         }
         newsRepository.save(newsList);
+    }
+
+    private void updateSourceInformations(FeedSource source, Document document) {
+        Node nodeChannel = document.getElementsByTagName("channel").item(0);
+        if (nodeChannel.getNodeType() == Node.ELEMENT_NODE) {
+            Element element = (Element)nodeChannel;
+            source.updateInformations(element);
+            feedRepository.save(source);
+        }
     }
 
     @Scheduled(fixedDelay=DELAY_EXECUTION)
