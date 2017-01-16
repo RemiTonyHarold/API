@@ -11,6 +11,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +42,7 @@ public class ScheduledTasks {
     }
 
     private void fetchNewsFromSource(FeedSource source) {
+        System.out.println("current source : " + source.getUrl());
         List<News> newsList = new ArrayList();
         String uriSource = source.getUrl();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -62,6 +65,8 @@ public class ScheduledTasks {
                 }
             }
         }
+        source.setLastUpdate(new Date());
+        feedRepository.save(source);
         newsRepository.save(newsList);
     }
 
@@ -78,7 +83,18 @@ public class ScheduledTasks {
     public void fetchNews() {
         System.out.println("Download news task started");
         for (FeedSource source : feedRepository.findAll()) {
-            fetchNewsFromSource(source);
+            if (source.getLastUpdate() == null) {
+                fetchNewsFromSource(source);
+            }
+            else {
+                Date lastUpdate = source.getLastUpdate();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(lastUpdate);
+                cal.add(Calendar.MINUTE, source.getTtl());
+                if (new Date().compareTo(cal.getTime()) > 0) {
+                    fetchNewsFromSource(source);
+                }
+            }
         }
         System.out.println("Download news task completed");
     }

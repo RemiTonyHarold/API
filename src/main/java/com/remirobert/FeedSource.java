@@ -1,7 +1,10 @@
 package com.remirobert;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.w3c.dom.*;
+
+import java.util.Date;
 
 /**
  * Created by remirobert on 12/01/2017.
@@ -15,6 +18,8 @@ public class FeedSource {
     private static final String LAST_BUILD_DATE_ELEMENT = "lastBuildDate";
     private static final String TITLE_ELEMENT = "title";
     private static final String MEDIA_ELEMENT = "image";
+    private static final String TTL_ELEMENT = "ttl";
+    private static final Integer DEFAULT_TTL = 60;
 
     private String id;
     private String categoryId;
@@ -25,6 +30,22 @@ public class FeedSource {
     private String imageUrl;
     private String publicationDate;
     private String lastBuildDate;
+    private Integer ttl;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Date lastUpdate;
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public FeedSource() {
+        ttl = DEFAULT_TTL;
+    }
 
     public String getCategoryId() {
         return categoryId;
@@ -54,6 +75,18 @@ public class FeedSource {
         return imageUrl;
     }
 
+    public Integer getTtl() {
+        return ttl;
+    }
+
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public String getLastBuildDate() {
+        return lastBuildDate;
+    }
+
     public void updateInformations(Element element) {
         if (element.getElementsByTagName(TITLE_ELEMENT).getLength() > 0) {
             name = element.getElementsByTagName(TITLE_ELEMENT).item(0).getTextContent();
@@ -70,8 +103,12 @@ public class FeedSource {
         if (element.getElementsByTagName(LAST_BUILD_DATE_ELEMENT).getLength() > 0) {
             lastBuildDate = element.getElementsByTagName(LAST_BUILD_DATE_ELEMENT).item(0).getTextContent();
         }
-        if (element.getElementsByTagName("image").getLength() > 0) {
-            Node nodeImage = element.getElementsByTagName("image").item(0);
+        if (element.getElementsByTagName(TTL_ELEMENT).getLength() > 0) {
+            String ttlValue = element.getElementsByTagName(TTL_ELEMENT).item(0).getTextContent();
+            ttl = Integer.parseInt(ttlValue);
+        }
+        if (element.getElementsByTagName(MEDIA_ELEMENT).getLength() > 0) {
+            Node nodeImage = element.getElementsByTagName(MEDIA_ELEMENT).item(0);
             if (nodeImage.getNodeType() == Node.ELEMENT_NODE) {
                 NodeList nodeListImage = ((Element)nodeImage).getElementsByTagName("url");
                 if (nodeListImage != null && nodeListImage.getLength() > 0) {

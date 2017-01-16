@@ -52,8 +52,7 @@ var listEntertainment = [
 
 var listNews = [
     {categoryId: news._id.str, url: "http://www.npr.org/rss/rss.php?id=1008"},
-    {categoryId: news._id.str, url: "http://feeds.nytimes.com/nyt/rss/HomePage"},
-    {categoryId: news._id.str, url: "http://newsrss.bbc.co.uk/rss/newsonline_world_edition/americas/rss.xml"}
+    {categoryId: news._id.str, url: "http://feeds.nytimes.com/nyt/rss/HomePage"}
 ]
 
 var listEducation = [
