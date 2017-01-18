@@ -10,10 +10,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by remirobert on 14/01/2017.
@@ -38,7 +35,11 @@ public class ScheduledTasks {
                 return news;
             }
         }
-        return new News(element, sourceId);
+        try {
+            return new News(element, sourceId);
+        } catch (InterruptedException e) {
+            return null;
+        }
     }
 
     private void fetchNewsFromSource(FeedSource source) {
@@ -61,7 +62,11 @@ public class ScheduledTasks {
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    newsList.add(getOrCreateNews((Element)nNode, source.getId()));
+                    News createNews = getOrCreateNews((Element) nNode, source.getId());
+                    if (createNews != null) {
+                        newsList.add(createNews);
+                    }
+
                 }
             }
         }
@@ -73,20 +78,19 @@ public class ScheduledTasks {
     private void updateSourceInformations(FeedSource source, Document document) {
         Node nodeChannel = document.getElementsByTagName("channel").item(0);
         if (nodeChannel.getNodeType() == Node.ELEMENT_NODE) {
-            Element element = (Element)nodeChannel;
+            Element element = (Element) nodeChannel;
             source.updateInformations(element);
             feedRepository.save(source);
         }
     }
 
-    @Scheduled(fixedDelay=DELAY_EXECUTION)
+    @Scheduled(fixedDelay = DELAY_EXECUTION)
     public void fetchNews() {
         System.out.println("Download news task started");
         for (FeedSource source : feedRepository.findAll()) {
             if (source.getLastUpdate() == null) {
                 fetchNewsFromSource(source);
-            }
-            else {
+            } else {
                 Date lastUpdate = source.getLastUpdate();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(lastUpdate);

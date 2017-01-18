@@ -9,8 +9,8 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by remirobert on 12/01/2017.
@@ -27,6 +27,15 @@ public class FeedController {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    private List<NewsCategoryResponse> sortNews(List<NewsCategoryResponse> newsList, long timestamp) {
+        if (newsList.isEmpty()) {
+            return newsList;
+        }
+        newsList = newsList.stream().filter(n -> n.getDate().getTime() >= timestamp).collect(Collectors.toList());
+        Collections.sort(newsList, Comparator.comparing(NewsCategoryResponse::getDate));
+        return newsList;
+    }
 
     private List<NewsCategoryResponse> getNewsForCategories(List<Category> categoryList) {
         List<NewsCategoryResponse> responseList = new ArrayList<>();
@@ -47,8 +56,7 @@ public class FeedController {
         if (categoryId != null) {
             Category category = categoryRepository.findById(categoryId);
             categoryList.add(category);
-        }
-        else {
+        } else {
             categoryList.addAll(categoryRepository.findAll());
         }
         return categoryList;
@@ -56,7 +64,8 @@ public class FeedController {
 
     @RequestMapping(value = "/news", method = RequestMethod.GET)
     public List<NewsCategoryResponse> getNews(@RequestParam(value = "source", required = false) String sourceId,
-                              @RequestParam(value = "category", required = false) String categoryId) {
+                                              @RequestParam(value = "category", required = false) String categoryId,
+                                              @RequestParam(value = "timestamp", required = false, defaultValue = "0") long timestamp) {
         if (sourceId != null) {
             FeedSource source = feedRepository.findById(sourceId);
             if (source == null) {
@@ -73,7 +82,7 @@ public class FeedController {
             }
             return responseList;
         }
-        return getNewsForCategories(getListCategories(categoryId));
+        return sortNews(getNewsForCategories(getListCategories(categoryId)), timestamp);
     }
 
     @RequestMapping(value = "/feedSource/{category}", method = RequestMethod.GET)

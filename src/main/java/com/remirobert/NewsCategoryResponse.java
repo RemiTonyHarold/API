@@ -1,5 +1,10 @@
 package com.remirobert;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +19,8 @@ public class NewsCategoryResponse {
     private String categoryId;
     private String title;
     private String pubDate;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Date date;
     private String description;
     private String link;
     private String guid;
@@ -26,12 +33,15 @@ public class NewsCategoryResponse {
         categoryId = category.getId();
         sourceId = news.getSourceId();
         title = news.getTitle();
-        pubDate = news.getPubDate();
         description = news.getDescription();
         link = news.getLink();
         guid = news.getGuid();
         creator = news.getCreator();
         thumbnail = news.getThumbnail();
+
+        date = news.getPubDate();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        pubDate = df.format(news.getPubDate());
     }
 
     public String getId() {
@@ -72,5 +82,9 @@ public class NewsCategoryResponse {
 
     public String getThumbnail() {
         return thumbnail;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

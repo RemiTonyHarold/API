@@ -4,6 +4,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.w3c.dom.*;
 import sun.security.pkcs11.wrapper.CK_CREATEMUTEX;
 
+import javax.annotation.processing.SupportedSourceVersion;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 import java.util.jar.Attributes;
@@ -26,7 +29,7 @@ public class News {
     private String id;
     private String sourceId;
     private String title;
-    private String pubDate;
+    private Date pubDate;
     private String description;
     private String link;
     private String guid;
@@ -52,7 +55,7 @@ public class News {
 
     public News() {}
 
-    public News(Element eElement, String sourceId) {
+    public News(Element eElement, String sourceId) throws InterruptedException {
         id = UUID.randomUUID().toString();
         this.sourceId= sourceId;
         dateCreation = new Date();
@@ -66,7 +69,17 @@ public class News {
             link = eElement.getElementsByTagName(LINK_ELEMENT).item(0).getTextContent();
         }
         if (eElement.getElementsByTagName(PUB_DATE_ELEMENT).getLength() > 0) {
-            pubDate = eElement.getElementsByTagName(PUB_DATE_ELEMENT).item(0).getTextContent();
+            String dateString = eElement.getElementsByTagName(PUB_DATE_ELEMENT).item(0).getTextContent();
+            if (dateString != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+                try {
+                    pubDate = formatter.parse(dateString);
+                    System.out.println("created date : " + pubDate);
+                    System.out.println("timestamp : " + pubDate.getTime());
+                } catch (ParseException e) {
+                    throw new InterruptedException();
+                }
+            }
         }
         if (eElement.getElementsByTagName(GUID_ELEMENT).getLength() > 0) {
             guid = eElement.getElementsByTagName(GUID_ELEMENT).item(0).getTextContent();
@@ -75,6 +88,9 @@ public class News {
             creator = eElement.getElementsByTagName(CREATOR_ELEMENT).item(0).getTextContent();
         }
         parseThumnail(eElement);
+        if (title == null || pubDate == null) {
+            throw new InterruptedException();
+        }
     }
 
     public String getId() {
@@ -89,7 +105,7 @@ public class News {
         return title;
     }
 
-    public String getPubDate() {
+    public Date getPubDate() {
         return pubDate;
     }
 
