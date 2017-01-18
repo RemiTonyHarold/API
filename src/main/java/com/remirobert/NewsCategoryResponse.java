@@ -40,7 +40,7 @@ public class NewsCategoryResponse {
         thumbnail = news.getThumbnail();
 
         date = news.getPubDate();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         pubDate = df.format(news.getPubDate());
     }
 
