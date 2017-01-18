@@ -80,7 +80,7 @@ public class FeedController {
             for (News news : newsList) {
                 responseList.add(new NewsCategoryResponse(category, news));
             }
-            return responseList;
+            return sortNews(responseList, timestamp);
         }
         return sortNews(getNewsForCategories(getListCategories(categoryId)), timestamp);
     }
