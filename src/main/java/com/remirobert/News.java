@@ -74,8 +74,6 @@ public class News {
                 SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
                 try {
                     pubDate = formatter.parse(dateString);
-                    System.out.println("created date : " + pubDate);
-                    System.out.println("timestamp : " + pubDate.getTime());
                 } catch (ParseException e) {
                     throw new InterruptedException();
                 }

@@ -33,18 +33,25 @@ public class RequestHandlerInterceptor implements HandlerInterceptor {
                 + ":: Start Time=" + System.currentTimeMillis());
         request.setAttribute(TIME_ATTRIBUTE_REQUEST, startTime);
 
+        String token = request.getHeader(HEADER_TOKEN);
+        User user = null;
+        if (token != null) {
+            user = tokenUtils.isTokenValid(token);
+        }
+
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             AuthorizationRequired filter = handlerMethod.getMethod().getAnnotation(AuthorizationRequired.class);
             if (filter == null) {
+                if (user != null) {
+                    request.setAttribute(USER_ATTRIBUTE_REQUEST, user);
+                }
                 return true;
             }
         }
-        String token = request.getHeader(HEADER_TOKEN);
         if (token == null) {
             throw new AuthorizationException();
         }
-        User user = tokenUtils.isTokenValid(token);
         if (user == null) {
             return false;
         }

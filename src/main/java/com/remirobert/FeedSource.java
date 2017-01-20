@@ -22,6 +22,7 @@ public class FeedSource {
     private static final Integer DEFAULT_TTL = 60;
 
     private String id;
+    private String ownerId;
     private String categoryId;
     private String name;
     private String url;
@@ -43,7 +44,24 @@ public class FeedSource {
         this.lastUpdate = lastUpdate;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public FeedSource() {
+        ownerId = null;
         ttl = DEFAULT_TTL;
     }
 

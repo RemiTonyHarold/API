@@ -60,4 +60,13 @@ public class ErrorController {
         m1.put("error", "Email already exist.");
         return m1;
     }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public Map<String, Object> categoryNotFound() {
+        Map<String, Object> m1 = new HashMap<String, Object>();
+        m1.put("error", "Category not found.");
+        return m1;
+    }
 }

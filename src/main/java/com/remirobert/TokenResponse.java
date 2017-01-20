@@ -1,5 +1,7 @@
 package com.remirobert;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -12,7 +14,8 @@ public class TokenResponse {
 
     public TokenResponse(Token token) {
         this.accessToken = token.getAccessToken();
-        this.expireDate = token.getExpireDate().toString();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        expireDate = df.format(token.getExpireDate());
     }
 
     public String getAccessToken() {

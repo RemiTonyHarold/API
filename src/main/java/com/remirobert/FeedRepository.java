@@ -13,5 +13,7 @@ import java.util.List;
 @Repository
 public interface FeedRepository extends MongoRepository<FeedSource, String> {
     List<FeedSource> findByCategoryId(String categoryId);
+    List<FeedSource> findByCategoryIdAndOwnerId(String categoryId, String ownerId);
+    FeedSource findByCategoryIdAndUrl(String categoryId, String url);
     FeedSource findById(String id);
 }

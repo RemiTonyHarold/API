@@ -42,7 +42,17 @@ public class ScheduledTasks {
         }
     }
 
-    private void fetchNewsFromSource(FeedSource source) {
+    private void updateSourceInformations(FeedSource source, Document document) {
+        Node nodeChannel = document.getElementsByTagName("channel").item(0);
+        if (nodeChannel.getNodeType() == Node.ELEMENT_NODE) {
+            Element element = (Element) nodeChannel;
+            source.updateInformations(element);
+            System.out.println("feedsource repository : " + feedRepository);
+            feedRepository.save(source);
+        }
+    }
+
+    public FeedSource fetchNewsFromSource(FeedSource source) {
         System.out.println("current source : " + source.getUrl());
         List<News> newsList = new ArrayList();
         String uriSource = source.getUrl();
@@ -73,15 +83,7 @@ public class ScheduledTasks {
         source.setLastUpdate(new Date());
         feedRepository.save(source);
         newsRepository.save(newsList);
-    }
-
-    private void updateSourceInformations(FeedSource source, Document document) {
-        Node nodeChannel = document.getElementsByTagName("channel").item(0);
-        if (nodeChannel.getNodeType() == Node.ELEMENT_NODE) {
-            Element element = (Element) nodeChannel;
-            source.updateInformations(element);
-            feedRepository.save(source);
-        }
+        return source;
     }
 
     @Scheduled(fixedDelay = DELAY_EXECUTION)
