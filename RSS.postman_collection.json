@@ -9,13 +9,52 @@
 		"45a0c05f-8ae9-ff76-befa-1ec84dd14b6d",
 		"43dfdc16-1be3-0efc-60bc-2c49184e0e2f",
 		"22dfa494-56ef-183b-2afe-68b71d41d75c",
-		"d4dbdaab-fb94-98c5-4460-31b3889036a5"
+		"d4dbdaab-fb94-98c5-4460-31b3889036a5",
+		"fd7b79a2-fdac-c610-6b01-7b2e869c6891",
+		"0ee954a8-d8f8-08b8-a4bf-08861b67c0e9",
+		"14a9f9ed-17ad-7ad8-30eb-f27aa602b48f"
 	],
 	"folders": [],
 	"timestamp": 1483571968563,
 	"owner": 0,
 	"public": false,
 	"requests": [
+		{
+			"id": "0ee954a8-d8f8-08b8-a4bf-08861b67c0e9",
+			"headers": "RSS-TOKEN: YWYGZLWDDDZK0XREP1N27UK8XNQGDAG6WSUMTWG07QSHMUVZSV8TCQN28TNACOFSCPL9GQH6U0GNRGS0PXBNVT64DA5CEHFSNAFMQ6D4D1ZNBW44J5QBQWT5RQF79JAC73JX5Q13K66E4GRAJ6TF9WXZRNAOD9IS9SEQ4AS0952TG5PTLVO0DRG1G0EJJMLAXYFYJHLCECN5KS7PXGOM4PBFT0Q3EBWZJPLU763EKM9F7EAIL2RXUB5T6TR5J47J\n",
+			"url": "{{url}}/feedSource/5881d23964f1160a7f99ff74",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484917877034,
+			"name": "{{url}}/feedSource/5881d23964f1160a7f99ff74",
+			"description": "with user auth optional",
+			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
+			"responses": []
+		},
+		{
+			"id": "14a9f9ed-17ad-7ad8-30eb-f27aa602b48f",
+			"headers": "RSS-TOKEN: YWYGZLWDDDZK0XREP1N27UK8XNQGDAG6WSUMTWG07QSHMUVZSV8TCQN28TNACOFSCPL9GQH6U0GNRGS0PXBNVT64DA5CEHFSNAFMQ6D4D1ZNBW44J5QBQWT5RQF79JAC73JX5Q13K66E4GRAJ6TF9WXZRNAOD9IS9SEQ4AS0952TG5PTLVO0DRG1G0EJJMLAXYFYJHLCECN5KS7PXGOM4PBFT0Q3EBWZJPLU763EKM9F7EAIL2RXUB5T6TR5J47J\n",
+			"url": "{{url}}/news",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484918456667,
+			"name": "{{url}}/news",
+			"description": "url with auth user",
+			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
+			"responses": []
+		},
 		{
 			"id": "22dfa494-56ef-183b-2afe-68b71d41d75c",
 			"headers": "",
@@ -59,22 +98,27 @@
 		{
 			"id": "45a0c05f-8ae9-ff76-befa-1ec84dd14b6d",
 			"headers": "",
-			"url": "{{url}}/token/146MJQ8VN27S9AO6QU7RHSKAS0F2VZMVKGR354XOLW3X87UPID0QX64UA9S5IRL0OD4LSIF39HEL5ONOM14PQ7IM85WPAYHKPG5XPSC8IUEHA37BQZW0A0CH7LLLSR0ZQSP5LXZPB7HHF9Y1J6CRCC2052MYZK8ADP72OLFJJD8Q3J5N4UJVRG71O1PD0WK646HSOSTW29X3WXTVXNHXSGLY2BYIQ6MA010XCW0P4SMFHDPP1LHK2B1DA36JWUEM",
-			"pathVariables": {},
+			"url": "{{url}}/accessToken",
 			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
-			"data": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "refreshToken",
+					"value": "Y5YGIB25WEVQ9EIZ84AECVC532AF9PI55LXRN0Q69OPDOV0A7S8DPOKPKRJZI3RUYO7K3AYDG4UMIM447BYN1BCNR09F295O1INFDNM43EI6T9LTBSW25XGJBVRVJV8VP6KO0497MCRX666R6DG46N9KDFOUAP7B4FTYADSK3ARCFTTG1QSYZ3TJJ7SCJQ3GJD37J2824YN10EF9KNVURHEU5BE4AI4UF59J0M84SS42GJ511IYRQRMUE7PM2ZNE",
+					"type": "text",
+					"enabled": true
+				}
+			],
 			"dataMode": "params",
-			"name": "{{url}}/accessToken",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1483998926027,
-			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
-			"helperAttributes": {}
+			"helperAttributes": {},
+			"time": 1484918462804,
+			"name": "{{url}}/accessToken",
+			"description": "",
+			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
+			"responses": []
 		},
 		{
 			"id": "4d385e02-dd21-7445-6a9e-70e5bbe4cc44",
@@ -160,22 +204,46 @@
 		{
 			"id": "d4dbdaab-fb94-98c5-4460-31b3889036a5",
 			"headers": "",
-			"url": "{{url}}/news/5878030ab23d51a4a9fb3f3d",
-			"pathVariables": {},
+			"url": "{{url}}/news?category=5878030ab23d51a4a9fb3f38",
 			"preRequestScript": null,
+			"pathVariables": {},
 			"method": "GET",
-			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
 			"data": null,
 			"dataMode": "params",
-			"name": "{{url}}/news/5878030ab23d51a4a9fb3f3d",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1484386126090,
 			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
-			"helperAttributes": {}
+			"helperAttributes": {},
+			"time": 1484918459826,
+			"name": "{{url}}/news/5878030ab23d51a4a9fb3f3d",
+			"description": "",
+			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
+			"responses": []
+		},
+		{
+			"id": "fd7b79a2-fdac-c610-6b01-7b2e869c6891",
+			"headers": "RSS-TOKEN: {{accessToken}}\n",
+			"url": "{{url}}/feedSource/5881d23964f1160a7f99ff74",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "url",
+					"value": "http://www.nba.com/jazz/rss.xml",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484917795743,
+			"name": "{{url}}/feedSource/5878030ab23d51a4a9fb3f35",
+			"description": "",
+			"collectionId": "b9d56074-52b0-6299-3354-e9e0ae0216db",
+			"responses": []
 		}
 	]
 }
