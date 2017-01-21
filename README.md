@@ -2,6 +2,8 @@
 
 **base_url** : http://remirobert.com:4242
 
+🔒 : needs to be authentificated, send token on the Header : [RSS-TOKEN:"token"]
+
 #Authentification
 
 ##Signup
@@ -100,22 +102,24 @@ get the feed sources for a given categorie
   - **response**  :
 ```json
 [
-    {
-        "categoryId": "5878030ab23d51a4a9fb3f38",
-        "id": "5878030ab23d51a4a9fb3f3d",
-        "name": "AP Top Science News",
-        "url": "http://hosted.ap.org/lineups/SCIENCEHEADS-rss_2.0.xml?SITE=OHLIM&SECTION=HOME"
-    },
-    {
-        "categoryId": "5878030ab23d51a4a9fb3f38",
-        "id": "5878030ab23d51a4a9fb3f3e",
-        "name": "ScienceDaily Headlines",
-        "url": "http://feeds.sciencedaily.com/sciencedaily"
-    }
+  {
+    "id": "5881d490abe29785a896d97e",
+    "ownerId": "cfb67d1f-a752-41db-9d56-3439ae856da2",
+    "categoryId": "5881d23964f1160a7f99ff74",
+    "name": "Utah Jazz",
+    "url": "http://www.nba.com/jazz/rss.xml",
+    "language": null,
+    "description": "Utah Jazz Team News",
+    "imageUrl": null,
+    "publicationDate": "Thu, 19 Jan 2017 08:45:16 -0700",
+    "lastBuildDate": null,
+    "ttl": 60
+  }
 ]
 ```
 
 #News
+🔒 optional, to get user's custom source at the sime time.
 get the news for a given source
 
   - **Method**    : GET
@@ -148,4 +152,59 @@ get the news for a given source
         "title": "Watch the picnic basket: Bear sightings surge in Connecticut"
     }
 ]
+```
+
+#User source
+
+##Get user's source 🔒
+  - **Method**    : GET
+  - **route**     : {{base_url}}/userFeedSource
+  - **response**  :
+```json
+[
+  {
+    "id": "5881d490abe29785a896d97e",
+    "ownerId": "cfb67d1f-a752-41db-9d56-3439ae856da2",
+    "categoryId": "5881d23964f1160a7f99ff74",
+    "name": "Utah Jazz",
+    "url": "http://www.nba.com/jazz/rss.xml",
+    "language": null,
+    "description": "Utah Jazz Team News",
+    "imageUrl": null,
+    "publicationDate": "Thu, 19 Jan 2017 08:45:16 -0700",
+    "lastBuildDate": null,
+    "ttl": 60
+  }
+]
+```
+
+##Delete a user's source 🔒
+  - **Method**    : DELETE
+  - **route**     : {{base_url}}/userFeedSource/{source}
+
+##Post new user feed source 🔒
+  - **Method**     : POST
+  - **route**      : {{base_url}}/userFeedSource/{category}
+  - **parameters** :
+```json
+{
+  url: "http://www.nba.com/jazz/rss.xml",
+}
+```
+  - **response** :
+  
+```json
+ {
+    "id": "5881d490abe29785a896d97e",
+    "ownerId": "cfb67d1f-a752-41db-9d56-3439ae856da2",
+    "categoryId": "5881d23964f1160a7f99ff74",
+    "name": "Utah Jazz",
+    "url": "http://www.nba.com/jazz/rss.xml",
+    "language": null,
+    "description": "Utah Jazz Team News",
+    "imageUrl": null,
+    "publicationDate": "Thu, 19 Jan 2017 08:45:16 -0700",
+    "lastBuildDate": null,
+    "ttl": 60
+  }
 ```
