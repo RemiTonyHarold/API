@@ -42,7 +42,7 @@ public class TokenUtils {
 
     public static Date dateExpiration() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR, 1);
+        calendar.add(Calendar.MONTH, 1);
         return calendar.getTime();
     }
 
