@@ -1,12 +1,14 @@
 package com.remirobert;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,7 +38,7 @@ public class NewsController {
         }
         newsList = newsList.stream().filter(n -> n.getDate().getTime() >= timestamp).collect(Collectors.toList());
         Collections.sort(newsList, Comparator.comparing(NewsCategoryResponse::getDate));
-        return newsList;
+        return newsList.size() > 300 ? newsList.subList(0, 300) : newsList;
     }
 
     private List<NewsCategoryResponse> getNewsForCategories(List<Category> categoryList, User user) {
@@ -48,7 +50,7 @@ public class NewsController {
                 feedSourceList.addAll(feedRepository.findByCategoryIdAndOwnerId(category.getId(), user.getId()));
             }
             for (FeedSource source : feedSourceList) {
-                List<News> newsList = newsRepository.findBySourceId(source.getId());
+                List<News> newsList = newsRepository.findBySourceId(source.getId(), new PageRequest(0, 50));
                 for (News news : newsList) {
                     responseList.add(new NewsCategoryResponse(category, news));
                 }
@@ -84,7 +86,7 @@ public class NewsController {
                 throw new SourceIdNotFoundException();
             }
             List<NewsCategoryResponse> responseList = new ArrayList<>();
-            List<News> newsList = newsRepository.findBySourceId(sourceId);
+            List<News> newsList = newsRepository.findBySourceId(sourceId, new PageRequest(0, 50));
             for (News news : newsList) {
                 responseList.add(new NewsCategoryResponse(category, news));
             }

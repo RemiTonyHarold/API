@@ -1,9 +1,11 @@
 package com.remirobert;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.print.Pageable;
 import java.util.List;
 
 /**
@@ -43,7 +45,7 @@ public class UserFeedController {
         if (source == null) {
             throw new SourceIdNotFoundException();
         }
-        List<News> newsList = newsRepository.findBySourceId(sourceId);
+        List<News> newsList = newsRepository.findBySourceId(sourceId, new PageRequest(0, 50));
         newsRepository.delete(newsList);
         feedRepository.delete(source);
     }
