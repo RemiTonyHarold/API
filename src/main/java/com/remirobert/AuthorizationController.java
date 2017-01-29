@@ -21,8 +21,8 @@ public class AuthorizationController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
-    public UserConnectReponse hello(@RequestParam(value = "email") String email,
-                                    @RequestParam(value = "password") String password) {
+    public UserConnectReponse signup(@RequestParam(value = "email") String email,
+                                     @RequestParam(value = "password") String password) {
         if (userRepository.findByEmail(email) != null) {
             throw new UserCreationException();
         }
