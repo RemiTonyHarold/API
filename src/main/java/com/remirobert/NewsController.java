@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.expression.Lists;
 
 import javax.servlet.http.HttpServletRequest;
 import java.awt.print.Pageable;
@@ -38,6 +39,7 @@ public class NewsController {
         }
         newsList = newsList.stream().filter(n -> n.getDate().getTime() >= timestamp).collect(Collectors.toList());
         Collections.sort(newsList, Comparator.comparing(NewsCategoryResponse::getDate));
+        Collections.reverse(newsList);
         return newsList.size() > 300 ? newsList.subList(0, 300) : newsList;
     }
 
