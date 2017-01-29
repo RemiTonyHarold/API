@@ -50,7 +50,7 @@ public class NewsController {
                 feedSourceList.addAll(feedRepository.findByCategoryIdAndOwnerId(category.getId(), user.getId()));
             }
             for (FeedSource source : feedSourceList) {
-                List<News> newsList = newsRepository.findBySourceId(source.getId(), new PageRequest(0, 50));
+                List<News> newsList = newsRepository.findBySourceId(source.getId());
                 for (News news : newsList) {
                     responseList.add(new NewsCategoryResponse(category, news));
                 }
@@ -86,7 +86,7 @@ public class NewsController {
                 throw new SourceIdNotFoundException();
             }
             List<NewsCategoryResponse> responseList = new ArrayList<>();
-            List<News> newsList = newsRepository.findBySourceId(sourceId, new PageRequest(0, 50));
+            List<News> newsList = newsRepository.findBySourceId(sourceId);
             for (News news : newsList) {
                 responseList.add(new NewsCategoryResponse(category, news));
             }

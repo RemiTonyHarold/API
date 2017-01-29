@@ -45,7 +45,7 @@ public class UserFeedController {
         if (source == null) {
             throw new SourceIdNotFoundException();
         }
-        List<News> newsList = newsRepository.findBySourceId(sourceId, new PageRequest(0, 50));
+        List<News> newsList = newsRepository.findBySourceId(sourceId);
         newsRepository.delete(newsList);
         feedRepository.delete(source);
     }
